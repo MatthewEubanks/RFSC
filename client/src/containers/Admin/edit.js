@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getBook, updateBook, clearBook, deletePost } from '../../actions';
+import { getBook, updateBook, clearBook, deleteBook } from '../../actions';
 
 class EditBook extends PureComponent {
   constructor(props) {
@@ -37,6 +37,16 @@ class EditBook extends PureComponent {
     this.props.dispatch(updateBook(this.state.formdata));
   };
 
+  deletePost = () => {
+    this.props.dispatch(deleteBook(this.props.match.params.id));
+  };
+
+  redirectUser = () => {
+    setTimeout(() => {
+      this.props.history.push('/user/user-reviews');
+    }, 1000);
+  };
+
   componentWillMount() {
     this.props.dispatch(getBook(this.props.match.params.id));
   }
@@ -56,11 +66,33 @@ class EditBook extends PureComponent {
     });
   }
 
+  componentWillUnmount = () => {
+    this.props.dispatch(clearBook());
+  };
+
   render() {
+    let books = this.props.books;
     return (
       <div className="rl_container article">
+        {books.updateBook ? (
+          <div className="edit_confirm">
+            post updated ,{' '}
+            <Link to={`/books/${books.book._id}`}>
+              Click here to see your post
+            </Link>
+          </div>
+        ) : null}
+        {books.postDeleted ? (
+          <div className="red_tag">
+            Post Deleted
+            {console.log('post deleted')}
+            {this.redirectUser()}
+          </div>
+        ) : null}
+
         <form onSubmit={this.submitForm}>
-          <h2>Edit Review</h2>
+          <h2>Edit review</h2>
+
           <div className="form_element">
             <input
               type="text"
@@ -69,26 +101,30 @@ class EditBook extends PureComponent {
               onChange={event => this.handleInput(event, 'name')}
             />
           </div>
+
           <div className="form_element">
             <input
               type="text"
-              placeholder="Enter Author"
+              placeholder="Enter author"
               value={this.state.formdata.author}
               onChange={event => this.handleInput(event, 'author')}
             />
           </div>
+
           <textarea
             value={this.state.formdata.review}
             onChange={event => this.handleInput(event, 'review')}
           />
+
           <div className="form_element">
             <input
               type="number"
-              placeholder="Enter Pages"
+              placeholder="Enter pages"
               value={this.state.formdata.pages}
               onChange={event => this.handleInput(event, 'pages')}
             />
           </div>
+
           <div className="form_element">
             <select
               value={this.state.formdata.rating}
@@ -100,6 +136,7 @@ class EditBook extends PureComponent {
               <option val="5">5</option>
             </select>
           </div>
+
           <div className="form_element">
             <input
               type="number"
@@ -108,9 +145,12 @@ class EditBook extends PureComponent {
               onChange={event => this.handleInput(event, 'price')}
             />
           </div>
-          <button type="submit">Edit Review</button>
+
+          <button type="submit">Edit review</button>
           <div className="delete_post">
-            <div className="button">Delete Review</div>
+            <div className="button" onClick={this.deletePost}>
+              Delete review
+            </div>
           </div>
         </form>
       </div>

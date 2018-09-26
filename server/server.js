@@ -185,10 +185,12 @@ app.post('/api/book_update', (req, res) => {
 });
 
 // DELETE //
-app.delete('/api/books/:id', (req, res) => {
-  Book.findByIdAndRemove(req.query.id).then(() => {
-    console.log(`Deleted book with id \`${req.query.id}\``);
-    res.status(204).end();
+app.delete('/api/delete_book', (req, res) => {
+  let id = req.query.id;
+
+  Book.findByIdAndRemove(id, (err, doc) => {
+    if (err) return res.status(400).send(err);
+    res.json(true);
   });
 });
 

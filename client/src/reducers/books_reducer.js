@@ -27,7 +27,23 @@ export default (state = {}, action) => {
         newbook: action.payload,
       };
     case 'UPDATE_BOOK':
-      return { ...state, newbook: action.payload };
+      return {
+        ...state,
+        updateBook: action.payload.success,
+        book: action.payload.doc,
+      };
+    case 'DELETE_BOOK':
+      return {
+        ...state,
+        postDeleted: action.payload,
+      };
+    case 'CLEAR_BOOK':
+      return {
+        ...state,
+        updateBook: action.payload.updateBook,
+        book: action.payload.book,
+        postDeleted: action.payload.postDeleted,
+      };
     default:
       return state;
   }
