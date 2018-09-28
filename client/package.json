@@ -4,6 +4,9 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.0",
+    "mocha": "^5.2.0",
     "react": "^16.5.1",
     "react-dom": "^16.5.1",
     "react-fontawesome": "^1.6.1",
