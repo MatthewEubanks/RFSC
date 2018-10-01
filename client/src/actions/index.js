@@ -48,17 +48,15 @@ export function clearBookWithReviewer() {
     },
   };
 }
+
 export function addBook(book) {
-  const request = axios
-    .post('/api/books', book)
-    .then(response => response.data);
+  const request = axios.post('/api/book', book).then(response => response.data);
 
   return {
     type: 'ADD_BOOK',
     payload: request,
   };
 }
-
 export function clearNewBook() {
   return {
     type: 'CLEAR_NEWBOOK',
@@ -70,13 +68,14 @@ export function getUserPosts(userId) {
   const request = axios
     .get(`/api/user_posts?user=${userId}`)
     .then(response => response.data);
+
   return {
     type: 'GET_USER_POSTS',
     payload: request,
   };
 }
 
-export const getBook = id => {
+export function getBook(id) {
   const request = axios
     .get(`/api/getBook?id=${id}`)
     .then(response => response.data);
@@ -85,22 +84,20 @@ export const getBook = id => {
     type: 'GET_BOOK',
     payload: request,
   };
-};
+}
 
-export const updateBook = data => {
-  let id = data._id;
-  console.log(id);
+export function updateBook(data) {
   const request = axios
-    .post(`/api/book_update?id=${id}`, data)
+    .post(`/api/book_update`, data)
     .then(response => response.data);
 
   return {
     type: 'UPDATE_BOOK',
     payload: request,
   };
-};
+}
 
-export const deleteBook = id => {
+export function deleteBook(id) {
   const request = axios
     .delete(`/api/delete_book?id=${id}`)
     .then(response => response.data);
@@ -109,9 +106,9 @@ export const deleteBook = id => {
     type: 'DELETE_BOOK',
     payload: request,
   };
-};
+}
 
-export const clearBook = () => {
+export function clearBook() {
   return {
     type: 'CLEAR_BOOK',
     payload: {
@@ -120,9 +117,9 @@ export const clearBook = () => {
       postDeleted: false,
     },
   };
-};
+}
 
-/*=============USER=================*/
+/*========= USER ===========*/
 
 export function loginUser({ email, password }) {
   const request = axios
@@ -144,17 +141,17 @@ export function auth() {
   };
 }
 
-export const getUsers = () => {
-  const request = axios.get('/api/users').then(response => response.data);
+export function getUsers() {
+  const request = axios.get(`/api/users`).then(response => response.data);
 
   return {
     type: 'GET_USER',
     payload: request,
   };
-};
+}
 
-export const userRegister = (user, userList) => {
-  const request = axios.post('/api/register', user);
+export function userRegister(user, userList) {
+  const request = axios.post(`/api/register`, user);
 
   return dispatch => {
     request.then(({ data }) => {
@@ -163,10 +160,11 @@ export const userRegister = (user, userList) => {
         success: data.success,
         users,
       };
+
       dispatch({
         type: 'USER_REGISTER',
         payload: response,
       });
     });
   };
-};
+}
