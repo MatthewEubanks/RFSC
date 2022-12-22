@@ -22,7 +22,7 @@
     "concurrently": "^4.0.1",
     "cookie-parser": "^1.4.3",
     "express": "^4.16.3",
-    "jsonwebtoken": "^8.3.0",
+    "jsonwebtoken": "^9.0.0",
     "moment-js": "^1.1.15",
     "mongoose": "^5.2.15",
     "passport-jwt": "^4.0.0",
